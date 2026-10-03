@@ -45,6 +45,8 @@ Replace `AMAZON_LINK_01` through `AMAZON_LINK_10` with Amazon Associates-generat
 3. Paste it into that product's `amazonUrl` field.
 4. Upload the updated `js/products.js` and test the link.
 
+Products whose Amazon link is still a placeholder show a blank image canvas until a real link is added. Once linked, the product's configured image appears.
+
 Do not recreate tracking parameters manually. Until a placeholder is replaced, the button remains on the page and displays “Product link coming soon” when clicked; it will not navigate to a broken address.
 
 ## Replacing product images

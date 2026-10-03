@@ -34,22 +34,29 @@
   }
 
   function productCard(product, prominent) {
+    const available = hasRealAmazonUrl(product.amazonUrl);
     const article = make("article", prominent ? "product-card product-card-featured" : "product-card");
     article.dataset.productId = String(product.id);
     const figure = make("div", "product-figure");
-    const img = document.createElement("img");
-    img.src = product.image || "images/placeholder-product.webp";
-    img.alt = product.imageAlt || product.name;
-    img.width = 720;
-    img.height = 720;
-    img.loading = prominent ? "eager" : "lazy";
-    img.decoding = "async";
-    img.addEventListener("error", function () {
-      if (img.src.endsWith("placeholder-product.webp")) return;
-      img.src = "images/placeholder-product.webp";
-      img.alt = "Editorial placeholder image for a recommended item";
-    }, { once: true });
-    figure.append(img);
+    if (available) {
+      const img = document.createElement("img");
+      img.src = product.image || "images/placeholder-product.webp";
+      img.alt = product.imageAlt || product.name;
+      img.width = 720;
+      img.height = 720;
+      img.loading = prominent ? "eager" : "lazy";
+      img.decoding = "async";
+      img.addEventListener("error", function () {
+        if (img.src.endsWith("placeholder-product.webp")) return;
+        img.src = "images/placeholder-product.webp";
+        img.alt = "Editorial placeholder image for a recommended item";
+      }, { once: true });
+      figure.append(img);
+    } else {
+      figure.classList.add("product-figure-pending");
+      figure.setAttribute("role", "img");
+      figure.setAttribute("aria-label", "Product image coming soon");
+    }
     const badge = make("span", "product-badge", product.badge || "Our Pick");
     figure.append(badge);
 
@@ -67,7 +74,6 @@
     const arrow = make("span", "button-arrow", "→");
     arrow.setAttribute("aria-hidden", "true");
     action.append(arrow);
-    const available = hasRealAmazonUrl(product.amazonUrl);
     if (available) {
       action.href = product.amazonUrl;
       action.target = "_blank";
