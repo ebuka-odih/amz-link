@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# TO CHANGE WEBSITE DOMAIN: replace YOURDOMAIN.com after deployment.
+Sitemap: https://YOURDOMAIN.com/sitemap.xml
