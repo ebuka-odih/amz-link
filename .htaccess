@@ -21,4 +21,14 @@ ErrorDocument 404 /404.html
   ExpiresByType image/svg+xml "access plus 1 year"
 </IfModule>
 
+# Product data changes more frequently than the site's bundled styling and scripts.
+# Revalidate the landing page and product list so cPanel visitors see current picks.
+<IfModule mod_headers.c>
+  <FilesMatch "^(index\.html|products\.js)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+</IfModule>
+
 # If installed in a subfolder (for example /picks/), change ErrorDocument to /picks/404.html.
